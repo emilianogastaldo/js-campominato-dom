@@ -85,7 +85,11 @@ main {
 
 .cell.clicked {
     cursor: not-allowed;
-    background-color: lightblue;
+    background-color: blue;
+}
+
+.cell.clicked.bomb {
+    background-color: red;
 }
 
 /* Footer */
