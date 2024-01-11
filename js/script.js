@@ -6,8 +6,6 @@ const difficulty = document.getElementById('difficulty');
 const grid = document.querySelector('.grid');
 const scoreText = document.getElementById('score');
 
-//Decido righe e colonne e quindi il numero di celle
-
 // Funzione per creare una nuova cella e ne decido la grandezza in base alla difficoltà
 const getNewCell = content => {
     const newCell = document.createElement('div');
@@ -17,8 +15,18 @@ const getNewCell = content => {
     return newCell;
 }
 
+// Funzione per generare le bombe
+const getBombs = (maxNum, manyBomb) => {
+    //Array che conterrà le bombe
+    const bombs = [];
+    while (bombs.length < manyBomb) {
+        const bomb = Math.floor(Math.random() * maxNum) + 1;
+        bombs.push(bomb);
+    }
+    return bombs;
+};
 
-//Creo l'evento per creare le celle
+//Creo l'evento per creare le celle e far iniziare il gioco
 playForm.addEventListener('submit', e => {
     e.preventDefault();
 
