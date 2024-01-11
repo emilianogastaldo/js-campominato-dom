@@ -1,0 +1,93 @@
+/* Reset CSS */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* Generics */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Lavoro sull'header */
+header {
+    height: 100px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px;
+}
+
+header img {
+    height: 70px;
+}
+
+.header-title {
+    display: flex;
+    align-items: center;
+}
+
+form {
+    flex-basis: 20%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+button {
+    padding: 2px 20px;
+    font-size: medium;
+    border-radius: 5px;
+}
+
+/* Lavoro sul main */
+main {
+    background-color: bisque;
+    padding: 10px 0;
+}
+
+/* Creo la griglia */
+.grid {
+    width: 500px;
+    height: 500px;
+    margin: 60px auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+
+}
+
+/* Customizzo le celle */
+.grid .cell {
+    cursor: pointer;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.grid.easy .cell {
+    width: calc(100%/10);
+    height: calc(100%/10);
+}
+
+.grid.medium .cell {
+    width: calc(100%/9);
+    height: calc(100%/9);
+}
+
+.grid.hard .cell {
+    width: calc(100%/7);
+    height: calc(100%/7);
+}
+
+.cell.clicked {
+    background-color: lightblue;
+}
+
+/* Footer */
+footer {
+    padding: 30px;
+}

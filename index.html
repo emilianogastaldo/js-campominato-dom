@@ -5,13 +5,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- Font Awesome -->
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.css'
+        integrity='sha512-tx5+1LWHez1QiaXlAyDwzdBTfDjX07GMapQoFTS74wkcPMsI3So0KYmFe6EHZjI8+eSG0ljBlAQc3PQ5BTaZtQ=='
+        crossorigin='anonymous' />
 
     <link rel="stylesheet" href="css/style.css">
     <script src="js/script.js" defer></script>
 </head>
 
 <body>
-
+    <header>
+        <div class="header-title">
+            <img src="img/mobile-logo.png" alt="">
+            <h1>CAMPO MINATO</h1>
+        </div>
+        <form>
+            <label for="difficulty">Difficoltà:</label>
+            <select id="difficulty">
+                <option value="easy">Semplice</option>
+                <option value="medium">Medio</option>
+                <option value="hard">Difficile</option>
+            </select>
+            <button>PLAY</button>
+        </form>
+    </header>
+    <main>
+        <div class="container">
+            <div class="grid">
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>Made with <i class="fa-solid fa-heart"></i> by <a href="#">Boolean</a></p>
+    </footer>
 </body>
 
 </html>
