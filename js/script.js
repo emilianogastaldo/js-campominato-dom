@@ -4,7 +4,7 @@ const playButton = document.querySelector('button');
 const playForm = document.querySelector('form');
 const difficulty = document.getElementById('difficulty');
 const grid = document.querySelector('.grid');
-
+const scoreText = document.getElementById('score');
 
 //Decido righe e colonne e quindi il numero di celle
 
@@ -22,6 +22,9 @@ const getNewCell = content => {
 playForm.addEventListener('submit', e => {
     e.preventDefault();
 
+    //Creo la variabile per aggiornare lo score.
+    let playerScore = 0;
+
     //Se esiste una griglia la cancello.
     grid.innerText = '';
 
@@ -30,6 +33,7 @@ playForm.addEventListener('submit', e => {
 
     //aggiungo la classe a grid per la grandezza delle celle
     grid.classList.add(difficultyValue);
+
 
     //Decido la quantità di colonne e righe
     let rows = 10;
@@ -49,13 +53,19 @@ playForm.addEventListener('submit', e => {
 
     //Creo le celle
     for (let i = 1; i <= totalCells; i++) {
+
+        //Creo una nuova cella
         const cell = getNewCell(i);
+
         //Aggiungo l'interazione delle celle
         cell.addEventListener('click', () => {
             //Controllo se è già strato clickata
             if (cell.classList.contains('clicked')) return;
 
+            //Se non è stata cliccata do la classe e aumento il punteggio di uno.
             cell.classList.add('clicked');
+            playerScore = ++playerScore;
+            score.innerText = 'Punteggio: ' + playerScore;
             console.log("Il numero all'interno è: " + i);
         });
         grid.appendChild(cell);

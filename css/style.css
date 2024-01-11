@@ -84,6 +84,7 @@ main {
 }
 
 .cell.clicked {
+    cursor: not-allowed;
     background-color: lightblue;
 }
 
