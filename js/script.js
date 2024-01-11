@@ -30,6 +30,11 @@ const getBombs = (maxNum, bombQuantity) => {
 //Creo l'evento per creare le celle e far iniziare il gioco
 playForm.addEventListener('submit', e => {
     e.preventDefault();
+    //Rinomino il bottone
+    playButton.innerText = 'Rigioca!';
+
+    //Preparo un flag
+    let isGameOver = false;
 
     //Se esiste una griglia la cancello.
     grid.innerText = '';
@@ -42,9 +47,9 @@ playForm.addEventListener('submit', e => {
 
 
     //Decido la quantità di colonne e di righe e di bombe 
-    let rows = 5;
-    let cols = 5;
-    let bombQuantity = 16;
+    let rows = 3;
+    let cols = 3;
+    let bombQuantity = 1;
     switch (difficultyValue) {
         case 'hard':
             rows = 7;
@@ -61,9 +66,14 @@ playForm.addEventListener('submit', e => {
     //Creo la variabile per aggiornare lo score.
     let playerScore = 0;
     score.innerText = `Punteggio: ${playerScore}`;
+
     //Creo le bombe
     const bombs = getBombs(totalCells, bombQuantity);
     console.log(bombs);
+
+    //Calcolo il punteggio massimo
+    const maxScore = totalCells - bombQuantity;
+
     //Creo le celle
     for (let i = 1; i <= totalCells; i++) {
 
@@ -72,20 +82,26 @@ playForm.addEventListener('submit', e => {
 
         //Aggiungo l'interazione delle celle
         cell.addEventListener('click', () => {
-            //Controllo se è già strato clickata
-            if (cell.classList.contains('clicked')) return;
+            //Controllo se è già strato clickata o se ha finito la partita
+            if (isGameOver || cell.classList.contains('clicked')) return;
+
+            //Do la classe clicked
             cell.classList.add('clicked');
 
             //Se premo una bomba
             if (bombs.includes(parseInt(cell.innerText))) {
                 cell.classList.add('bomb');
-                console.log('hai perso con il punteggio di: ' + playerScore);
+                isGameOver = true;
+                score.innerText = 'hai perso con il punteggio di: ' + playerScore;
             } else {
-                //Se non è stata cliccata do la classe e aumento il punteggio di uno.
+                //Se non è una bomba aumento il punteggio di uno e aggiorno il punteggio.
                 playerScore = ++playerScore;
                 score.innerText = 'Punteggio: ' + playerScore;
             }
-
+            if (playerScore === maxScore) {
+                isGameOver = true;
+                score.innerText = 'hai vinto con il punteggio di: ' + playerScore;
+            }
 
         });
         grid.appendChild(cell);
