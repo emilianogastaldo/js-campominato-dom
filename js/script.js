@@ -16,10 +16,10 @@ const getNewCell = content => {
 }
 
 // Funzione per generare le bombe
-const getBombs = (maxNum, manyBomb) => {
+const getBombs = (maxNum, bombQuantity) => {
     //Array che conterrà le bombe
     const bombs = [];
-    while (bombs.length < manyBomb) {
+    while (bombs.length < bombQuantity) {
         const bomb = Math.floor(Math.random() * maxNum) + 1;
         if (!bombs.includes(bomb)) bombs.push(bomb);
     }
@@ -31,9 +31,6 @@ const getBombs = (maxNum, manyBomb) => {
 playForm.addEventListener('submit', e => {
     e.preventDefault();
 
-    //Creo la variabile per aggiornare lo score.
-    let playerScore = 0;
-
     //Se esiste una griglia la cancello.
     grid.innerText = '';
 
@@ -44,9 +41,10 @@ playForm.addEventListener('submit', e => {
     grid.classList.add(difficultyValue);
 
 
-    //Decido la quantità di colonne e righe
-    let rows = 10;
-    let cols = 10;
+    //Decido la quantità di colonne e di righe e di bombe 
+    let rows = 5;
+    let cols = 5;
+    let bombQuantity = 16;
     switch (difficultyValue) {
         case 'hard':
             rows = 7;
@@ -60,6 +58,12 @@ playForm.addEventListener('submit', e => {
 
     const totalCells = rows * cols;
 
+    //Creo la variabile per aggiornare lo score.
+    let playerScore = 0;
+    score.innerText = `Punteggio: ${playerScore}`;
+    //Creo le bombe
+    const bombs = getBombs(totalCells, bombQuantity);
+    console.log(bombs);
     //Creo le celle
     for (let i = 1; i <= totalCells; i++) {
 
@@ -70,12 +74,19 @@ playForm.addEventListener('submit', e => {
         cell.addEventListener('click', () => {
             //Controllo se è già strato clickata
             if (cell.classList.contains('clicked')) return;
-
-            //Se non è stata cliccata do la classe e aumento il punteggio di uno.
             cell.classList.add('clicked');
-            playerScore = ++playerScore;
-            score.innerText = 'Punteggio: ' + playerScore;
-            console.log("Il numero all'interno è: " + i);
+
+            //Se premo una bomba
+            if (bombs.includes(parseInt(cell.innerText))) {
+                cell.classList.add('bomb');
+                console.log('hai perso con il punteggio di: ' + playerScore);
+            } else {
+                //Se non è stata cliccata do la classe e aumento il punteggio di uno.
+                playerScore = ++playerScore;
+                score.innerText = 'Punteggio: ' + playerScore;
+            }
+
+
         });
         grid.appendChild(cell);
     }
