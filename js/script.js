@@ -26,6 +26,14 @@ const getBombs = (maxNum, bombQuantity) => {
     return bombs;
 };
 
+//Funzione per capire se il gioco è finito
+const endGame = (text, score, won) => {
+    const message = won
+        ? `Hai vinto!`
+        : `Hai perso! Hai totalizzato ${score} punti`;
+    text.innerText = message;
+    isGameOver = true;
+}
 
 //Creo l'evento per creare le celle e far iniziare il gioco
 playForm.addEventListener('submit', e => {
@@ -65,7 +73,7 @@ playForm.addEventListener('submit', e => {
 
     //Creo la variabile per aggiornare lo score.
     let playerScore = 0;
-    score.innerText = `Punteggio: ${playerScore}`;
+    scoreText.innerText = `Punteggio: ${playerScore}`;
 
     //Creo le bombe
     const bombs = getBombs(totalCells, bombQuantity);
@@ -88,19 +96,20 @@ playForm.addEventListener('submit', e => {
             //Do la classe clicked
             cell.classList.add('clicked');
 
+            //Verifico se ho colpito una bomba
+            hasHitBomb = bombs.includes(parseInt(cell.innerText));
+
             //Se premo una bomba
-            if (bombs.includes(parseInt(cell.innerText))) {
+            if (hasHitBomb) {
                 cell.classList.add('bomb');
-                isGameOver = true;
-                score.innerText = 'hai perso con il punteggio di: ' + playerScore;
+                endGame(scoreText, playerScore, false);
             } else {
                 //Se non è una bomba aumento il punteggio di uno e aggiorno il punteggio.
                 playerScore = ++playerScore;
                 score.innerText = 'Punteggio: ' + playerScore;
             }
             if (playerScore === maxScore) {
-                isGameOver = true;
-                score.innerText = 'hai vinto con il punteggio di: ' + playerScore;
+                endGame(scoreText, playerScore, true);
             }
 
         });
