@@ -21,10 +21,11 @@ const getBombs = (maxNum, manyBomb) => {
     const bombs = [];
     while (bombs.length < manyBomb) {
         const bomb = Math.floor(Math.random() * maxNum) + 1;
-        bombs.push(bomb);
+        if (!bombs.includes(bomb)) bombs.push(bomb);
     }
     return bombs;
 };
+
 
 //Creo l'evento per creare le celle e far iniziare il gioco
 playForm.addEventListener('submit', e => {
