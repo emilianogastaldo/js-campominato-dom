@@ -26,23 +26,31 @@ const getBombs = (maxNum, bombQuantity) => {
     return bombs;
 };
 
+//Funzione per scoprire tutte le caselle
+const revealAll = (bombs) => {
+    const cells = document.querySelectorAll('.cell');
+    for (let cell of cells) {
+        cell.classList.add('clicked');
+        if (bombs.includes(parseInt(cell.innerText))) cell.classList.add('bomb');
+    }
+}
+
 //Funzione per capire se il gioco è finito
-const endGame = (text, score, won) => {
+const endGame = (text, score, won, revealFuction, bombs) => {
     const message = won
         ? `Hai vinto!`
         : `Hai perso! Hai totalizzato ${score} punti`;
     text.innerText = message;
-    isGameOver = true;
+    revealAll(bombs);
 }
+
+
 
 //Creo l'evento per creare le celle e far iniziare il gioco
 playForm.addEventListener('submit', e => {
     e.preventDefault();
     //Rinomino il bottone
     playButton.innerText = 'Rigioca!';
-
-    //Preparo un flag
-    let isGameOver = false;
 
     //Se esiste una griglia la cancello.
     grid.innerText = '';
@@ -55,9 +63,9 @@ playForm.addEventListener('submit', e => {
 
 
     //Decido la quantità di colonne e di righe e di bombe 
-    let rows = 3;
-    let cols = 3;
-    let bombQuantity = 1;
+    let rows = 10;
+    let cols = 10;
+    let bombQuantity = 16;
     switch (difficultyValue) {
         case 'hard':
             rows = 7;
@@ -77,7 +85,7 @@ playForm.addEventListener('submit', e => {
 
     //Creo le bombe
     const bombs = getBombs(totalCells, bombQuantity);
-    console.log(bombs);
+    //console.log(bombs);
 
     //Calcolo il punteggio massimo
     const maxScore = totalCells - bombQuantity;
@@ -91,7 +99,9 @@ playForm.addEventListener('submit', e => {
         //Aggiungo l'interazione delle celle
         cell.addEventListener('click', () => {
             //Controllo se è già strato clickata o se ha finito la partita
-            if (isGameOver || cell.classList.contains('clicked')) return;
+
+            //Controllo se hanno già la classe clicked
+            if (cell.classList.contains('clicked')) return;
 
             //Do la classe clicked
             cell.classList.add('clicked');
@@ -102,14 +112,14 @@ playForm.addEventListener('submit', e => {
             //Se premo una bomba
             if (hasHitBomb) {
                 cell.classList.add('bomb');
-                endGame(scoreText, playerScore, false);
+                endGame(scoreText, playerScore, false, revealAll, bombs);
             } else {
                 //Se non è una bomba aumento il punteggio di uno e aggiorno il punteggio.
                 playerScore = ++playerScore;
                 score.innerText = 'Punteggio: ' + playerScore;
             }
             if (playerScore === maxScore) {
-                endGame(scoreText, playerScore, true);
+                endGame(scoreText, playerScore, true, revealAll, bombs);
             }
 
         });
